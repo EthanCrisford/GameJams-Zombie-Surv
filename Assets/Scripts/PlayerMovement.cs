@@ -22,8 +22,10 @@ public class PlayerMovement : MonoBehaviour
         // Move player horizontally
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
-        Vector3 movement = new Vector3(moveHorizontal, 10f, moveVertical).normalized;
-        //rb.transform.position + movement * speed * Time.deltaTime;
+        Vector3 movement = new Vector3(moveHorizontal, 0f, moveVertical).normalized;
+        rb.transform.position += movement * speed * Time.deltaTime;
+
+        print("xz vel" + moveHorizontal + "  " + moveVertical);
 
     }
 }
