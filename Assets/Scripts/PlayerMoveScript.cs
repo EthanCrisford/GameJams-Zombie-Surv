@@ -46,13 +46,9 @@ public class PlayerMoveScript : MonoBehaviour
         {
             rb.drag = groundDrag;
         }
-        else
-        {
-            rb.drag = 0;
-        }
+        
 
-        // Stops the player going too fast
-        SpeedControl();
+
 
     }
 
@@ -70,16 +66,5 @@ public class PlayerMoveScript : MonoBehaviour
         rb.AddForce(moveDirect.normalized * speed * 10f, ForceMode.Force);
     }
 
-    private void SpeedControl()
-    {
-        // Defined the flat velocity variable
-        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-        // Limits the velocity i it exceeds maximum
-        if (flatVel.magnitude > speed)
-        {
-            Vector3 limitVel = flatVel.normalized * speed;
-            rb.velocity = new Vector3(limitVel.x, rb.velocity.y, limitVel.z);
-        }
-    }
+  
 }
