@@ -11,7 +11,7 @@ public class HealthScript : MonoBehaviour
     [Header("Game Objects")]
     public GameObject entity;
 
-    public Rigidbody rb;
+    Rigidbody rb;
 
 
     // Start is called before the first frame update
