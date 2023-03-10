@@ -12,11 +12,13 @@ public class HealthScript : MonoBehaviour
     public GameObject entity;
 
     Rigidbody rb;
+    public Animator anim;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         if (entity.tag == "Zombie")
         {
@@ -40,15 +42,18 @@ public class HealthScript : MonoBehaviour
     public void LoseHealh(int damage)
     {
         currentHealth -= damage;
+        print("current health is "+currentHealth);
     }
 
     void Die()
     {   
+        print(entity.tag);
         if (entity.tag == "Zombie")
         {
             if(currentHealth <= 0)
             {
-                entity.SetActive(false);
+                Destroy(gameObject);
+               
             }
         }
 
@@ -59,5 +64,9 @@ public class HealthScript : MonoBehaviour
                 Time.timeScale = 0;
             }
         }
+    }
+    public void destroy()
+    {
+        Destroy(gameObject);
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
     public GameObject bullet;
-    public int damage;
+    public int damage = 1;
     HealthScript hs;
     // Start is called before the first frame update
     void Start()
@@ -18,11 +18,14 @@ public class BulletScript : MonoBehaviour
     {
         
     }
-    private void OnCollisionEnter(Collision col)
+    private void OnTriggerEnter(Collider col)
     {
+        print("COLLISION");
         if(col.gameObject.tag == "Zombie")
         {
-            hs.LoseHealh(damage);   
+            hs = (HealthScript)col.gameObject.GetComponent<HealthScript>();
+            hs.LoseHealh(damage);
+            print(hs.currentHealth);
         }
         else
         {

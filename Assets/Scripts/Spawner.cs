@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    
-
+   
     public enum SpawnState { SPAWNING, WAITING, COUNTING };
 
     [SerializeField] private Wave[] waves;
@@ -15,46 +14,67 @@ public class Spawner : MonoBehaviour
 
     private SpawnState state = SpawnState.COUNTING;
 
+    
     private int currentWave;
+   
 
     [SerializeField] private Transform[] spawners;
-   // [SerializeField] private List<CharacterStats> zombieList;
 
     private void Start()
     {
         waveCountdown = timeBetweenWaves;
 
         currentWave = 0;
+
+        state = SpawnState.SPAWNING;
+        StartCoroutine(SpawnWave(waves[currentWave]));
+
     }
 
-  /*  public void Update()
+    public void Update()
     {
-        if (state == SpawnState.WAITING)
-        {
-            if (!ZombiesAreDead())
+
+
+        print("state=" + state);
+
+       if (state == SpawnState.WAITING)
+       {
+            if (ZombiesIsDead()==false)
             {
+                // zombies are still alive
                 return;
             }
             else
             {
+                // zombies are all dead
                 CompleteWave();
             }
+            return;
         }
-        
 
-        if (waveCountdown <= 0)
+        print("*** new wave ***");
+
+        if (ZombiesIsDead() == true)
         {
-            if (state != SpawnState.SPAWNING)
+            if (waveCountdown <= 0)
             {
-                StartCoroutine(SpawnWave(waves[currentWave]));
+                if (state != SpawnState.SPAWNING)
+                {
+                    print("start coroutine");
+                    state = SpawnState.SPAWNING;
+                    StartCoroutine(SpawnWave(waves[currentWave]));
+                }
+            }
+            else
+            {
+                waveCountdown -= Time.deltaTime;
             }
         }
-        else
-        {
-            waveCountdown -= Time.deltaTime;
-        }
-    }
-  */
+       
+
+
+   }
+ 
     private IEnumerator SpawnWave(Wave wave)
     {
         state = SpawnState.SPAWNING;
@@ -69,35 +89,31 @@ public class Spawner : MonoBehaviour
 
         yield break;
     }
+    
 
     private void SpawnZombie(GameObject zombie)
     {
-        int randomInt = Random.RandomRange(1, spawners.Length);
+        int randomInt = Random.RandomRange(0, spawners.Length);
         Transform randomSpawner = spawners[randomInt];
 
-       GameObject newZombie = Instantiate(zombie, randomSpawner.position, randomSpawner.rotation);
-       // CharacterStats newZombieStats = newZombie.GetComponent<CharacterStats>();
+        GameObject newZombie = Instantiate(zombie, randomSpawner.position, randomSpawner.rotation);
+        CharacterStats newZombieStats = newZombie.GetComponent<CharacterStats>();
 
-       // zombieList.Add(newZombieStats);
+        
     }
 
-    /*& private bool ZombiesAreDead()
+
+    private bool ZombiesIsDead()
     {
-        int i = 0;
-        foreach (CharacterStats zombie in zombieList)
+        GameObject[]zombies = GameObject.FindGameObjectsWithTag("Zombie");
+        if( zombies.Length > 0)
         {
-            if (zombie.IsDead())
-            {
-                i++;
-            }
-            else
-            {
-                return false;
-            }
-            return true;
+            return false;
         }
+        return true;
     }
-    */
+    
+
     private void CompleteWave()
     {
         Debug.Log("Wave done.");
@@ -116,4 +132,5 @@ public class Spawner : MonoBehaviour
         }
         
     }
+   
 }
