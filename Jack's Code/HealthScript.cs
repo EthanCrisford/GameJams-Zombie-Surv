@@ -18,7 +18,15 @@ public class HealthScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        maxHealth = 3;
+        if (entity.tag == "Zombie")
+        {
+            maxHealth = 2;
+        }
+        if (entity.tag == "Player")
+        {
+            maxHealth = 3;
+        }
+
         currentHealth = maxHealth;
 
     }
