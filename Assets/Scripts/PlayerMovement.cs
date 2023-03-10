@@ -21,11 +21,10 @@ public class PlayerMovement : MonoBehaviour
     {
         // Move player horizontally
         float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-        Vector3 movement = new Vector3(moveHorizontal, 0f, moveVertical).normalized;
+        Vector3 movement = new Vector3(moveHorizontal, 0f ,0f).normalized;
         rb.transform.position += movement * speed * Time.deltaTime;
 
-        print("xz vel" + moveHorizontal + "  " + moveVertical);
+        print("xz vel" + moveHorizontal);
 
     }
 }
