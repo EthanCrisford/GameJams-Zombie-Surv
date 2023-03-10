@@ -6,10 +6,11 @@ public class BulletScript : MonoBehaviour
 {
     public GameObject bullet;
     public int damage;
+    HealthScript hs;
     // Start is called before the first frame update
     void Start()
     {
-        
+        hs = GetComponent<HealthScript>();
     }
 
     // Update is called once per frame
@@ -19,9 +20,13 @@ public class BulletScript : MonoBehaviour
     }
     private void OnCollisionEnter(Collision col)
     {
-        //if(col.GameObjectWithTag == "enemy")
+        if(col.gameObject.tag == "Zombie")
         {
-
+            hs.LoseHealh(damage);   
+        }
+        else
+        {
+            Destroy(bullet);
         }
     }
 }
